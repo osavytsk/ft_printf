@@ -12,15 +12,15 @@
 
 #include "libftprintf.h"
 
-int		lower_o(va_list *arg, t_flag *flag)
+int		low_o(va_list *arg, t_flags *flag)
 {
 	uintmax_t		nb;
 	int				len;
 
-	nb = get_utype(arg, flag);
+	nb = take_utype(arg, flag);
 	if (flag->prec)
 		flag->zero = 0;
-	len = get_ui_flag_len(nb, flag, 8);
+	len = take_ui_flag_len(nb, flag, 8);
 	if (flag->sharp && flag->precision > 0)
 	{
 		flag->precision--;
@@ -29,7 +29,7 @@ int		lower_o(va_list *arg, t_flag *flag)
 	put_uint_left_space(flag, len, nb, 3);
 	if (!(flag->prec && !flag->precision && !nb)
 			&& !(flag->sharp && !nb))
-		get_ui(nb, "012345678", 8);
+		take_ui(nb, "012345678", 8);
 	if (flag->width && flag->minus)
 		put_space(flag->width, len);
 	return ((flag->width > len) ? flag->width : len);

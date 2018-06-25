@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-void	ft_putnstr(char *str, int n)
+void	put_nstr(char *str, int n)
 {
 	int		i;
 
@@ -23,7 +23,7 @@ void	ft_putnstr(char *str, int n)
 		ft_putchar(str[i++]);
 }
 
-int		ft_strnlen(char *str, int n)
+int		str_nlen(char *str, int n)
 {
 	int		i;
 
@@ -35,7 +35,7 @@ int		ft_strnlen(char *str, int n)
 	return (i);
 }
 
-void	put_str_left_space(t_flag *flag, int len)
+void	put_str_left_space(t_flags *flag, int len)
 {
 	if (flag->width && !flag->minus && !flag->zero)
 		put_space(flag->width, len);

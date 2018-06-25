@@ -24,11 +24,11 @@ SRCDIR	=	./src/
 LSRCDIR =	./libft/src/
 
 
-SRC		=  ft_printf.c		get_type.c		pars.c			low_s.c \
+SRC		=  ft_printf.c		take_type.c		pars.c			low_s.c \
 		   up_s.c			low_p.c			low_d.c			up_d.c \
 		   low_i.c			low_o.c			up_o.c 			low_c.c\
 		   low_u.c			up_u.c			low_x.c			up_x.c \
-		   up_c.c			modul.c			int_util.c		str_util.c \
+		   up_c.c			percent.c		int_util.c		str_util.c \
 		   tab_util.c 		uint_util.c		wstr_util.c		undef.c
 
 LSRC	= ft_atoi.c			ft_itoa.c		ft_memmove.c	ft_putstr.c \

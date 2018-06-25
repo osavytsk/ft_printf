@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-void	get_int(intmax_t nb)
+void	take_int(intmax_t nb)
 {
 	int			c;
 	uintmax_t	n;
@@ -22,16 +22,16 @@ void	get_int(intmax_t nb)
 	else
 		n = nb;
 	if (n / 10 > 0)
-		get_int(n / 10);
+		take_int(n / 10);
 	c = n % 10 + 48;
 	write(1, &c, 1);
 }
 
-int		get_flag_len(intmax_t nb, t_flag *flag)
+int		take_flag_len(intmax_t nb, t_flags *flag)
 {
 	int		len;
 
-	len = get_len(nb);
+	len = take_len(nb);
 	if (flag->precision > len)
 		len += flag->precision - len;
 	if (flag->plus && nb >= 0)
@@ -45,7 +45,7 @@ int		get_flag_len(intmax_t nb, t_flag *flag)
 	return (len);
 }
 
-int		get_len(intmax_t nb)
+int		take_len(intmax_t nb)
 {
 	int			len;
 	uintmax_t	n;
@@ -60,7 +60,7 @@ int		get_len(intmax_t nb)
 	return (len + 1);
 }
 
-void	put_int_left_space(t_flag *flag, int len, intmax_t nb)
+void	put_int_left_space(t_flags *flag, int len, intmax_t nb)
 {
 	if (flag->space && !flag->plus && nb >= 0)
 		ft_putchar(' ');
@@ -73,5 +73,5 @@ void	put_int_left_space(t_flag *flag, int len, intmax_t nb)
 	if (flag->zero && flag->width && !flag->minus && !flag->precision)
 		put_zero(flag->width, len);
 	else if (flag->precision)
-		put_zero(flag->precision, get_len(nb));
+		put_zero(flag->precision, take_len(nb));
 }

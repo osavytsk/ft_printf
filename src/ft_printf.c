@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-void	reset_flag(t_flag *flag)
+void	null_flags_struct(t_flags *flag)
 {
 	flag->precision = 0;
 	flag->prec = 0;
@@ -22,24 +22,24 @@ void	reset_flag(t_flag *flag)
 	flag->sharp = 0;
 	flag->zero = 0;
 	flag->width = 0;
-	flag->e_length = 0;
+	flag->e_size = 0;
 }
 
-int		get_specifier(char **format, t_flag *flag, va_list *arg)
+int		take_specifier(char **format, t_flags *flag, va_list *arg)
 {
-	static int	(*f[])(va_list*, t_flag*) = {lower_s, upper_s,
-			lower_p, lower_d, upper_d, lower_i, lower_o, upper_o,
-			lower_u, upper_u, lower_x, upper_x, lower_c, upper_c,
-			modulo, 0};
-	static char	spec[] = {'s', 'S', 'p', 'd', 'D', 'i', 'o', 'O', 'u', 'U',
+	static int	(*f[])(va_list*, t_flags*) = {low_s, up_s,
+			low_p, low_d, up_d, low_i, low_o, up_o,
+			low_u, up_u, low_x, up_x, low_c, up_c,
+			percent, 0};
+	static char	specs[] = {'s', 'S', 'p', 'd', 'D', 'i', 'o', 'O', 'u', 'U',
 	'x', 'X', 'c', 'C', '%', 0};
 	int			i;
 	int			ret;
 
 	i = 0;
-	while (spec[i] != **format && spec[i])
+	while (specs[i] != **format && specs[i])
 		i++;
-	if (**format != '\0' && spec[i] == **format)
+	if (**format != '\0' && specs[i] == **format)
 	{
 		ret = f[i](arg, flag);
 		(*format)++;
@@ -48,12 +48,12 @@ int		get_specifier(char **format, t_flag *flag, va_list *arg)
 	if (**format != '\0')
 	{
 		(*format)++;
-		return (undefined(*(*format - 1), flag));
+		return (undef(*(*format - 1), flag));
 	}
 	return (0);
 }
 
-int		parser(char **format, t_flag *flag, va_list *arg)
+int		pars(char **format, t_flags *flag, va_list *arg)
 {
 	int		ret;
 
@@ -62,10 +62,10 @@ int		parser(char **format, t_flag *flag, va_list *arg)
 	{
 		if (**format == '%')
 		{
-			reset_flag(flag);
+			null_flags_struct(flag);
 			(*format)++;
-			get_option(format, flag, arg);
-			ret += get_specifier(format, flag, arg);
+			take_options(format, flag, arg);
+			ret += take_specifier(format, flag, arg);
 		}
 		else if (**format != '\0')
 		{
@@ -80,13 +80,13 @@ int		parser(char **format, t_flag *flag, va_list *arg)
 int		ft_printf(const char *format, ...)
 {
 	va_list		arg;
-	t_flag		*flag;
+	t_flags		*flag;
 	int			ret;
 
 	ret = 0;
-	flag = ft_memalloc(sizeof(t_flag));
+	flag = ft_memalloc(sizeof(t_flags));
 	va_start(arg, format);
-	ret = parser((char**)&format, flag, &arg);
+	ret = pars((char **) &format, flag, &arg);
 	va_end(arg);
 	ft_memdel((void**)&flag);
 	return (ret);

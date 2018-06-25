@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-int		undefined(char c, t_flag *flag)
+int		undef(char c, t_flags *flag)
 {
 	int		len;
 

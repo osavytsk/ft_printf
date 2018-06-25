@@ -12,20 +12,20 @@
 
 #include "libftprintf.h"
 
-void		get_option(char **str, t_flag *flag, va_list *arg)
+void		take_options(char **str, t_flags *flag, va_list *arg)
 {
 	if (**str != '0' && ft_isdigit(**str))
-		get_width(str, flag, arg);
+		take_width(str, flag, arg);
 	if (**str == '.')
-		get_precision(str, flag, arg);
+		take_precision(str, flag, arg);
 	if (**str == 'h' || **str == 'l' || **str == 'j' || **str == 'z')
-		get_length(str, flag, arg);
+		take_length(str, flag, arg);
 	if (**str == '#' || **str == '0' || **str == '-' || **str == '+'
 			|| **str == ' ')
-		get_flag(str, flag, arg);
+		take_flag(str, flag, arg);
 }
 
-void		get_flag(char **str, t_flag *flag, va_list *arg)
+void		take_flag(char **str, t_flags *flag, va_list *arg)
 {
 	while (**str == '#' || **str == '0' || **str == '-' || **str == '+'
 			|| **str == ' ')
@@ -42,25 +42,19 @@ void		get_flag(char **str, t_flag *flag, va_list *arg)
 			flag->space = 1;
 		(*str)++;
 	}
-	get_option(str, flag, arg);
+	take_options(str, flag, arg);
 }
 
-void		get_width(char **str, t_flag *flag, va_list *arg)
+void		take_width(char **str, t_flags *flag, va_list *arg)
 {
-	int		width;
-
-	width = 0;
 	flag->width = ft_atoi(*str);
 	while (ft_isdigit(**str))
 		(*str)++;
-	get_option(str, flag, arg);
+	take_options(str, flag, arg);
 }
 
-void		get_precision(char **str, t_flag *flag, va_list *arg)
+void		take_precision(char **str, t_flags *flag, va_list *arg)
 {
-	int		precision;
-
-	precision = 0;
 	while (**str == '.')
 	{
 		flag->prec = 1;
@@ -69,32 +63,32 @@ void		get_precision(char **str, t_flag *flag, va_list *arg)
 		while (ft_isdigit(**str))
 			(*str)++;
 	}
-	get_option(str, flag, arg);
+	take_options(str, flag, arg);
 }
 
-void		get_length(char **str, t_flag *flag, va_list *arg)
+void		take_length(char **str, t_flags *flag, va_list *arg)
 {
 	if (**str == 'h')
 	{
-		if (*(*str + 1) == 'h' && flag->e_length < 3)
-			flag->e_length = hh;
-		else if (flag->e_length < 2)
-			flag->e_length = h;
+		if (*(*str + 1) == 'h' && flag->e_size < 3)
+			flag->e_size = hh;
+		else if (flag->e_size < 2)
+			flag->e_size = h;
 	}
 	if (**str == 'l')
 	{
-		if (*(*str + 1) == 'l' && flag->e_length < 5)
-			flag->e_length = ll;
-		else if (flag->e_length < 4)
-			flag->e_length = l;
+		if (*(*str + 1) == 'l' && flag->e_size < 5)
+			flag->e_size = ll;
+		else if (flag->e_size < 4)
+			flag->e_size = l;
 	}
-	if (**str == 'j' && flag->e_length < 6)
-		flag->e_length = j;
+	if (**str == 'j' && flag->e_size < 6)
+		flag->e_size = j;
 	if (**str == 'z')
-		flag->e_length = z;
-	if (flag->e_length)
+		flag->e_size = z;
+	if (flag->e_size)
 		(*str)++;
-	if (flag->e_length == hh || flag->e_length == ll)
+	if (flag->e_size == hh || flag->e_size == ll)
 		(*str)++;
-	get_option(str, flag, arg);
+	take_options(str, flag, arg);
 }

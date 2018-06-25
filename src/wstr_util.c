@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-void		ft_putwchar(wchar_t c)
+void		put_wchar(wchar_t c)
 {
 	if (c <= 0x7F)
 		ft_putchar(c);
@@ -52,7 +52,7 @@ int			wchar_len(wchar_t c)
 	return (len);
 }
 
-void		ft_putnwstr(wchar_t *s, int n)
+void		put_nwstr(wchar_t *s, int n)
 {
 	int		i;
 
@@ -62,7 +62,7 @@ void		ft_putnwstr(wchar_t *s, int n)
 		if (wchar_len(s[i]) > n)
 			break ;
 		n -= wchar_len(s[i]);
-		ft_putwchar(s[i++]);
+		put_wchar(s[i++]);
 	}
 }
 

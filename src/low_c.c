@@ -12,14 +12,14 @@
 
 #include "libftprintf.h"
 
-int			lower_c(va_list *arg, t_flag *flag)
+int			low_c(va_list *arg, t_flags *flag)
 {
 	unsigned char	c;
 	int				len;
 
 	len = 1;
-	if (flag->e_length == l)
-		return (upper_c(arg, flag));
+	if (flag->e_size == l)
+		return (up_c(arg, flag));
 	c = (unsigned char)va_arg(*arg, int);
 	if (flag->width && !flag->minus && !flag->zero)
 		put_space(flag->width, len);

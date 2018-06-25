@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-int		upper_c(va_list *arg, t_flag *flag)
+int		up_c(va_list *arg, t_flags *flag)
 {
 	wchar_t			c;
 	int				len;
@@ -23,7 +23,7 @@ int		upper_c(va_list *arg, t_flag *flag)
 		put_space(flag->width, len);
 	if (flag->width && flag->zero && !flag->minus)
 		put_zero(flag->width, len);
-	ft_putwchar(c);
+	put_wchar(c);
 	if (flag->width && flag->minus)
 		put_space(flag->width, len);
 	return (flag->width > len ? flag->width : len);

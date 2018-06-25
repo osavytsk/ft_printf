@@ -14,9 +14,9 @@ NAME	=	libftprintf.a
 CC		=	gcc
 FLAG	=	-Wall -Wextra -Werror
 RM		=	rm -Rf
-LIB		=	libft/libft.a
-LIBSRC	=	libft/
-HEADER	=	includes/
+LIB		=	./libft/libft.a
+LIBSRC	=	./libft/
+HEADER	=	./includes/
 LHEADER =	./libft/includes/
 OBJDIR	=	./obj/
 LOBJDIR	=	./libft/obj/
@@ -56,7 +56,7 @@ LOBJS 	=	$(addprefix $(LOBJDIR), $(LSRC:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LOBJS)
+$(NAME): $(OBJS) $(LOBJS) $(LIB)
 	ar rc $(NAME) $(OBJS) $(LOBJS)
 	ranlib $(NAME)
 
@@ -64,9 +64,11 @@ $(LIB):
 	make -C $(LIBSRC)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER)libftprintf.h
+	@mkdir -p $(OBJDIR)
 	$(CC) -o $@ $(FLAG) -c $< -I $(HEADER)
 
 $(LOBJDIR)%.o:$(LSRCDIR)%.c $(LHEADER)libft.h
+	@mkdir -p $(LOBJDIR)
 	$(CC) -o $@ $(FLAG) -c $< -I $(LHEADER)
 
 clean:
